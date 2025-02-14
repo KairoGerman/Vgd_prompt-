@@ -1,1 +1,1 @@
-//This Is my journal prompt for Feb 10th //
+This Is my journal prompt for Video Game Design
