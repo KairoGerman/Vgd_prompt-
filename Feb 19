@@ -1,0 +1,82 @@
+What I did For feb 19  I made a hockey game but I dont have a Debuger so the game won't work
+Command :
+const canvas = document.createElement("canvas");
+const ctx = canvas.getContext("2d");
+document.body.appendChild(canvas);
+canvas.width = 800;
+canvas.height = 400;
+
+const paddleWidth = 10, paddleHeight = 80;
+const puckSize = 10;
+
+let paddle1 = { x: 10, y: 160, dy: 0 };
+let paddle2 = { x: 780, y: 160, dy: 0 };
+let puck = { x: 400, y: 200, dx: 3, dy: 3 };
+
+function drawRect(x, y, w, h, color) {
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, w, h);
+}
+
+function drawPuck() {
+    ctx.beginPath();
+    ctx.arc(puck.x, puck.y, puckSize, 0, Math.PI * 2);
+    ctx.fillStyle = "black";
+    ctx.fill();
+    ctx.closePath();
+}
+
+function update() {
+    paddle1.y += paddle1.dy;
+    paddle2.y += paddle2.dy;
+    
+    if (paddle1.y < 0) paddle1.y = 0;
+    if (paddle1.y > canvas.height - paddleHeight) paddle1.y = canvas.height - paddleHeight;
+    if (paddle2.y < 0) paddle2.y = 0;
+    if (paddle2.y > canvas.height - paddleHeight) paddle2.y = canvas.height - paddleHeight;
+
+    puck.x += puck.dx;
+    puck.y += puck.dy;
+    
+    if (puck.y < puckSize || puck.y > canvas.height - puckSize) puck.dy *= -1;
+    
+    if (
+        (puck.x - puckSize <= paddle1.x + paddleWidth && puck.y > paddle1.y && puck.y < paddle1.y + paddleHeight) ||
+        (puck.x + puckSize >= paddle2.x && puck.y > paddle2.y && puck.y < paddle2.y + paddleHeight)
+    ) {
+        puck.dx *= -1;
+    }
+    
+    if (puck.x < 0 || puck.x > canvas.width) {
+        puck.x = 400;
+        puck.y = 200;
+        puck.dx *= -1;
+    }
+}
+
+function draw() {
+    drawRect(0, 0, canvas.width, canvas.height, "lightblue");
+    drawRect(paddle1.x, paddle1.y, paddleWidth, paddleHeight, "red");
+    drawRect(paddle2.x, paddle2.y, paddleWidth, paddleHeight, "blue");
+    drawPuck();
+}
+
+function loop() {
+    update();
+    draw();
+    requestAnimationFrame(loop);
+}
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === "w") paddle1.dy = -5;
+    if (e.key === "s") paddle1.dy = 5;
+    if (e.key === "ArrowUp") paddle2.dy = -5;
+    if (e.key === "ArrowDown") paddle2.dy = 5;
+});
+
+document.addEventListener("keyup", (e) => {
+    if (e.key === "w" || e.key === "s") paddle1.dy = 0;
+    if (e.key === "ArrowUp" || e.key === "ArrowDown") paddle2.dy = 0;
+});
+
+loop();
