@@ -1,0 +1,21 @@
+Assignment 5: Scene Development and Code Mod
+
+Changes I Made:
+- Increased the player’s movement speed from 5 to 8.
+- Switched control input from GetAxis to GetAxisRaw for better control feel.
+- Added background music that loops using an Audio Source.
+- Created a win trigger that activates when the player touches a flag.
+
+ Challenges I Faced:
+- Music wasn’t playing at first — fixed by adding an Audio Source and checking "Play On Awake".
+- Player wouldn’t trigger win — solved by adding "Player" tag and enabling "Is Trigger".
+ 
+How I Solved Them:
+- Used Unity’s Console to debug.
+- Searched Unity forums and used built-in documentation.
+- Asked classmates for help with `OnTriggerEnter2D`.
+
+ What I'm Most Proud Of:
+- The win condition — it makes my game feel complete.
+- The smoother controls after editing the movement script.
+- Adding music made a big difference in the vibe of the game.
